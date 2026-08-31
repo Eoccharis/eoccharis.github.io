@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta
+    name="description"
+    content="Windows 11 troubleshooting and reinstallation case study by Charis Erin."
+  />
+
+  <title>Windows 11 Troubleshooting | Charis Erin</title>
+
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+
+      <a class="brand" href="../index.html">
+        CE<span>.</span>
+      </a>
+
+      <nav aria-label="Primary navigation">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#experience">Experience</a>
+        <a href="../index.html#cases">Case Studies</a>
+        <a href="../index.html#tools">Tools</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- CASE STUDY HERO -->
+    <section class="case-study-hero">
+      <div class="container">
+
+        <a class="back-link" href="../index.html#cases">
+          ← Back to case studies
+        </a>
+
+        <p class="section-label">PERSONAL TECHNICAL CASE · AUGUST 2026</p>
+
+        <h1>
+          Windows 11 troubleshooting,
+          recovery & reinstallation
+        </h1>
+
+        <p class="case-study-intro">
+          A practical troubleshooting case involving an unexpected Windows
+          recovery environment, boot-configuration issues, data preservation,
+          storage-driver troubleshooting and a clean Windows 11 installation.
+        </p>
+
+        <div class="case-meta-grid">
+
+          <div>
+            <span>Environment</span>
+            <strong>HP Victus 16-d0033nia</strong>
+          </div>
+
+          <div>
+            <span>Operating System</span>
+            <strong>Windows 11 Home</strong>
+          </div>
+
+          <div>
+            <span>Storage</span>
+            <strong>~1 TB Samsung NVMe SSD</strong>
+          </div>
+
+          <div>
+            <span>Incident Date</span>
+            <strong>19 August 2026</strong>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- OVERVIEW -->
+    <section class="section">
+      <div class="container case-study-grid">
+
+        <div>
+          <p class="section-label">01 / OVERVIEW</p>
+
+          <h2>
+            Restore a usable system without
+            compromising the user's data.
+          </h2>
+        </div>
+
+        <div class="case-study-copy">
+
+          <p>
+            During preparation of the laptop for virtualization and Windows
+            configuration work, the system restarted unexpectedly and began
+            entering a Windows recovery environment instead of the expected
+            Windows desktop.
+          </p>
+
+          <p>
+            The recovery screen referenced a "Windows Server" environment that
+            did not match the expected installation. The display behaviour was
+            also abnormal, creating uncertainty about whether the original
+            Windows environment and user data were still intact.
+          </p>
+
+          <p>
+            The first objective was therefore not to reinstall Windows
+            immediately. The priority was to establish what was still present,
+            protect user data and determine the safest recovery path.
+          </p>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SYMPTOMS -->
+    <section class="section muted">
+      <div class="container">
+
+        <p class="section-label">02 / INITIAL SYMPTOMS</p>
+
+        <div class="evidence-grid">
+
+          <article class="evidence-card">
+            <span class="evidence-number">01</span>
+
+            <h3>Unexpected recovery environment</h3>
+
+            <p>
+              The laptop repeatedly booted into a recovery-style environment
+              rather than the normal Windows desktop.
+            </p>
+          </article>
+
+
+          <article class="evidence-card">
+            <span class="evidence-number">02</span>
+
+            <h3>Unexpected boot entry</h3>
+
+            <p>
+              The recovery interface offered an option to continue to
+              "Windows Server", which did not match the expected operating
+              system.
+            </p>
+          </article>
+
+
+          <article class="evidence-card">
+            <span class="evidence-number">03</span>
+
+            <h3>Display problems</h3>
+
+            <p>
+              The built-in display was initially/intermittently blank and an
+              external display was not behaving as expected.
+            </p>
+          </article>
+
+
+          <article class="evidence-card">
+            <span class="evidence-number">04</span>
+
+            <h3>Data-loss risk</h3>
+
+            <p>
+              The system contained important personal, course and IT-lab files,
+              so destructive remediation could not be performed without first
+              protecting the data.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- DIAGNOSIS -->
+    <section class="section">
+      <div class="container">
+
+        <p class="section-label">03 / DIAGNOSIS</p>
+
+        <div class="diagnosis-grid">
+
+          <article>
+            <h3>Disk Management</h3>
+
+            <p>
+              Disk Management confirmed that the internal SSD was present and
+              online. The disk contained an EFI system partition, a large
+              Windows partition and a recovery partition.
+            </p>
+
+            <div class="technical-note">
+              <strong>Key finding</strong>
+              <span>
+                The internal storage had not simply disappeared or become
+                physically disconnected.
+              </span>
+            </div>
+          </article>
+
+
+          <article>
+            <h3>Windows.old</h3>
+
+            <p>
+              A large
+              <code>C:\Windows.old</code>
+              directory was discovered, including a preserved user profile
+              and personal data.
+            </p>
+
+            <div class="technical-note">
+              <strong>Key finding</strong>
+              <span>
+                Significant user data remained recoverable before reinstalling.
+              </span>
+            </div>
+          </article>
+
+
+          <article>
+            <h3>BCDEdit investigation</h3>
+
+            <p>
+              Boot configuration data was inspected from the Windows Recovery
+              Command Prompt. The default Windows boot-loader entry pointed to
+              the Windows installation on the C: partition but was labelled
+              "Windows Server".
+            </p>
+
+            <div class="technical-note">
+              <strong>Key finding</strong>
+              <span>
+                The boot state was inconsistent with the expected Windows
+                environment.
+              </span>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- DATA PROTECTION -->
+    <section class="section dark">
+      <div class="container">
+
+        <p class="section-label">04 / DATA PROTECTION</p>
+
+        <h2>
+          Protect the data before making
+          destructive changes.
+        </h2>
+
+        <div class="process-grid">
+
+          <div>
+            <span>01</span>
+            <h3>Identify recoverable data</h3>
+            <p>
+              Located the preserved user profile and important personal
+              folders inside the previous Windows installation.
+            </p>
+          </div>
+
+          <div>
+            <span>02</span>
+            <h3>Create an external backup</h3>
+            <p>
+              Copied important files to an external drive rather than moving
+              them, retaining the original backup as a fallback.
+            </p>
+          </div>
+
+          <div>
+            <span>03</span>
+            <h3>Verify the recovery path</h3>
+            <p>
+              Kept the backup available until the replacement Windows
+              installation had been validated.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- STORAGE DRIVER -->
+    <section class="section">
+      <div class="container case-study-grid">
+
+        <div>
+          <p class="section-label">05 / STORAGE DRIVER TROUBLESHOOTING</p>
+
+          <h2>
+            The installation could not see
+            the internal SSD.
+          </h2>
+        </div>
+
+        <div class="case-study-copy">
+
+          <p>
+            After creating Windows 11 installation media, Windows Setup could
+            detect the installation USB but could not enumerate the internal
+            Samsung NVMe SSD.
+          </p>
+
+          <p>
+            Instead of assuming the SSD had failed, the exact HP laptop model
+            was identified and the vendor's Intel Rapid Storage Technology
+            package was investigated.
+          </p>
+
+          <div class="technical-callout">
+
+            <span>Driver identified</span>
+
+            <strong>
+              Intel Rapid Storage Technology / VMD F6 driver
+            </strong>
+
+            <small>
+              HP SoftPaq SP147234 · Version 19.5.2.1049
+            </small>
+
+          </div>
+
+          <p>
+            The extracted F6 driver was loaded into Windows Setup. Immediately
+            afterward, the internal SSD became visible as the installation
+            target.
+          </p>
+
+          <p>
+            This provided strong evidence that the installation-time storage
+            visibility problem was caused by the missing Intel RST/VMD driver,
+            rather than the SSD being physically absent.
+          </p>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- REMEDIATION -->
+    <section class="section muted">
+      <div class="container">
+
+        <p class="section-label">06 / REMEDIATION</p>
+
+        <h2>
+          Clean installation and controlled
+          post-install validation.
+        </h2>
+
+        <div class="timeline-process">
+
+          <div>
+            <span>01</span>
+            <strong>Identify the correct target disk</strong>
+            <p>
+              Confirmed the internal SSD separately from the Windows
+              installation and driver USB devices.
+            </p>
+          </div>
+
+          <div>
+            <span>02</span>
+            <strong>Remove the previous Windows partitions</strong>
+            <p>
+              After the user data had been backed up, the previous Windows,
+              MSR and recovery partitions were removed.
+            </p>
+          </div>
+
+          <div>
+            <span>03</span>
+            <strong>Install Windows 11 Home Single Language</strong>
+            <p>
+              Windows was installed to the resulting unallocated space.
+            </p>
+          </div>
+
+          <div>
+            <span>04</span>
+            <strong>Run Windows Update</strong>
+            <p>
+              Driver and firmware updates were applied to restore expected
+              hardware functionality.
+            </p>
+          </div>
+
+          <div>
+            <span>05</span>
+            <strong>Validate Device Manager</strong>
+            <p>
+              Graphics, audio and other core devices were checked for missing
+              or faulty drivers.
+            </p>
+          </div>
+
+          <div>
+            <span>06</span>
+            <strong>Restore personal files</strong>
+            <p>
+              Important files were copied from the external backup after the
+              new system had been validated.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- RESULTS -->
+    <section class="section">
+      <div class="container">
+
+        <p class="section-label">07 / OUTCOME</p>
+
+        <div class="outcome-header">
+
+          <h2>
+            The system was returned to
+            a stable working state.
+          </h2>
+
+          <p>
+            Validation was performed against practical acceptance criteria
+            rather than assuming that a successful Windows installation alone
+            meant the incident was resolved.
+          </p>
+
+        </div>
+
+
+        <div class="results-grid">
+
+          <div class="result-card">
+            <span>PASS</span>
+            <strong>Windows 11 installation</strong>
+            <p>Fresh Windows 11 Home installation completed successfully.</p>
+          </div>
+
+          <div class="result-card">
+            <span>PASS</span>
+            <strong>Internal SSD</strong>
+            <p>SSD became visible after loading the correct RST/VMD driver.</p>
+          </div>
+
+          <div class="result-card">
+            <span>PASS</span>
+            <strong>Wi-Fi & touchpad</strong>
+            <p>Core input and network functionality were restored.</p>
+          </div>
+
+          <div class="result-card">
+            <span>PASS</span>
+            <strong>Graphics & audio</strong>
+            <p>
+              Expected Intel, NVIDIA and Realtek devices were present without
+              visible warning symbols.
+            </p>
+          </div>
+
+          <div class="result-card">
+            <span>PASS</span>
+            <strong>Windows Update</strong>
+            <p>
+              Required driver and firmware updates were applied successfully.
+            </p>
+          </div>
+
+          <div class="result-card">
+            <span>PASS</span>
+            <strong>Personal data</strong>
+            <p>
+              Backed-up personal files were restored to the new Windows
+              environment.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ROOT CAUSE -->
+    <section class="section muted">
+      <div class="container case-study-grid">
+
+        <div>
+          <p class="section-label">08 / ROOT-CAUSE ANALYSIS</p>
+
+          <h2>
+            Separate what was proven
+            from what was probable.
+          </h2>
+        </div>
+
+        <div class="case-study-copy">
+
+          <p>
+            The immediate technical blocker during Windows installation was
+            identified with high confidence: the Windows Setup environment
+            lacked the Intel RST/VMD storage driver required to enumerate the
+            internal NVMe SSD.
+          </p>
+
+          <p>
+            The original boot incident was different. The available evidence
+            indicated an inconsistent boot configuration or OS state, but the
+            exact event that changed that state could not be conclusively
+            established.
+          </p>
+
+          <div class="technical-callout">
+
+            <span>Key troubleshooting principle</span>
+
+            <strong>
+              Do not convert an informed hypothesis into a confirmed root cause.
+            </strong>
+
+            <small>
+              Record what the evidence proves, what it suggests and what
+              remains unknown.
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- LESSONS -->
+    <section class="section">
+      <div class="container">
+
+        <p class="section-label">09 / LESSONS LEARNED</p>
+
+        <h2>
+          A reusable troubleshooting workflow,
+          not just a one-off fix.
+        </h2>
+
+        <div class="lessons-grid">
+
+          <div>
+            <strong>01</strong>
+            <p>
+              Start with read-only diagnostics before making destructive
+              changes.
+            </p>
+          </div>
+
+          <div>
+            <strong>02</strong>
+            <p>
+              Identify and protect recoverable user data before reinstalling
+              an operating system.
+            </p>
+          </div>
+
+          <div>
+            <strong>03</strong>
+            <p>
+              Match vendor drivers to the exact hardware model when dealing
+              with storage-controller problems.
+            </p>
+          </div>
+
+          <div>
+            <strong>04</strong>
+            <p>
+              Distinguish installation media, driver media and the internal
+              target disk carefully.
+            </p>
+          </div>
+
+          <div>
+            <strong>05</strong>
+            <p>
+              Validate hardware and drivers before rebuilding applications
+              or virtual machines.
+            </p>
+          </div>
+
+          <div>
+            <strong>06</strong>
+            <p>
+              Keep the original backup until the replacement system and
+              restored files have been verified.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- TECH STACK -->
+    <section class="section dark">
+      <div class="container">
+
+        <p class="section-label">10 / TECHNOLOGIES & TOOLS</p>
+
+        <div class="tech-tags">
+
+          <span>Windows 11</span>
+          <span>Windows Recovery Environment</span>
+          <span>BCDEdit</span>
+          <span>Disk Management</span>
+          <span>Windows Setup</span>
+          <span>Intel RST / VMD</span>
+          <span>Device Manager</span>
+          <span>Windows Update</span>
+          <span>VirtualBox</span>
+          <span>External Backup</span>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CTA -->
+    <section class="section">
+
+      <div class="container contact-card">
+
+        <div>
+
+          <p class="section-label">CASE COMPLETE</p>
+
+          <h2>
+            See how I approach support problems.
+          </h2>
+
+          <p>
+            I bring the same structured approach to customer issues,
+            technical incidents and service operations.
+          </p>
+
+        </div>
+
+        <div class="contact-links">
+
+          <a href="../index.html#cases">
+            View other case studies →
+          </a>
+
+          <a href="mailto:eoccharis@gmail.com">
+            Contact me →
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer">
+
+    <div class="container">
+      © 2026 Charis Erin · Customer & Technical Support
+    </div>
+
+  </footer>
+
+</body>
+</html>
